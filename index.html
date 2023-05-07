@@ -1,0 +1,3096 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+    <link rel="stylesheet" href="css/leaflet-measure.css">
+    <style>
+        html,
+        body,
+        #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <title>webgis</title>
+</head>
+
+<body>
+    <div id="map">
+    </div>
+    <script src="js/qgis2web_expressions.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/leaflet.rotatedMarker.js"></script>
+    <script src="js/leaflet.pattern.js"></script>
+    <script src="js/leaflet-hash.js"></script>
+    <script src="js/Autolinker.min.js"></script>
+    <script src="js/rbush.min.js"></script>
+    <script src="js/labelgun.min.js"></script>
+    <script src="js/labels.js"></script>
+    <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+    <script src="js/leaflet-measure.js"></script>
+    <script src="data/Kecamatan_Banyumas_1.js"></script>
+    <script src="data/Buffer_UPTDPasar_1km_2.js"></script>
+    <script src="data/Buffer_Indomaret_1km_3.js"></script>
+    <script src="data/Buffer_Alfamidi_1km_4.js"></script>
+    <script src="data/Buffer_Alfamart_1km_5.js"></script>
+    <script src="data/Buffer_45km_RMUTeachingIndustry_6.js"></script>
+    <script src="data/Buffer_34km_RMUTeachingIndustry_7.js"></script>
+    <script src="data/JarakPasarBanyumasTI_8.js"></script>
+    <script src="data/JarakKonsumenTI_9.js"></script>
+    <script src="data/JarakIndomaretTI_10.js"></script>
+    <script src="data/JarakAlfamidiTI_11.js"></script>
+    <script src="data/JarakAlfamartTI_12.js"></script>
+    <script src="data/Alfamart_13.js"></script>
+    <script src="data/Alfamidi_14.js"></script>
+    <script src="data/Indomaret_15.js"></script>
+    <script src="data/PasarTradisional_16.js"></script>
+    <script src="data/Konsumen_17.js"></script>
+    <script src="data/RMUTeachingIndustryUNSOED1_18.js"></script>
+    <script>
+        var map = L.map('map', {
+            zoomControl: true, maxZoom: 17, minZoom: 10
+        }).fitBounds([[-7.516128352829647, 109.05436484369777], [-7.32202563385008, 109.32921319468277]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({ truncate: { length: 30, location: 'smart' } });
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+            .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+            .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 10,
+            maxZoom: 17,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        function pop_Kecamatan_Banyumas_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_Kec'] !== null ? autolinker.link(feature.properties['ID_Kec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['xcoord'] !== null ? autolinker.link(feature.properties['xcoord'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ycoord'] !== null ? autolinker.link(feature.properties['ycoord'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kode_prop'] !== null ? autolinker.link(feature.properties['kode_prop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kode_kab'] !== null ? autolinker.link(feature.properties['kode_kab'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            ;
+        }
+
+        function style_Kecamatan_Banyumas_1_0(feature) {
+            switch (String(feature.properties['Kecamatan'])) {
+                case 'Ajibarang':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(69,116,40,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Ayah':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(61,94,33,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Banyumas':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(52,72,25,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Baturaden':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(44,50,18,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Bumi Jawa':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(36,27,10,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Cilongok':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(40,28,11,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Gandrung Mangu':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(49,33,13,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Gumelar':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(57,39,16,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Jatilawang':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(65,45,18,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Jeruklegi':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(73,51,21,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kalibagor':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(81,57,24,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kalimanah':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(88,62,28,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Karang Pucung':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(96,68,31,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Karanglewas':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(104,74,35,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kasugihan':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(111,80,38,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kawunganten':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(118,86,42,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kebasen':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(124,91,46,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kedungbanteng':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(131,97,50,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kemangkon':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(138,103,55,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kembaran':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(145,110,61,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kemranjen':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(151,116,66,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Kroya':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(158,122,71,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Lumbir':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(164,128,77,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Maos':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(170,134,83,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Nusawungu':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(176,140,89,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Padamara':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(182,146,95,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Paguyangan':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(187,152,102,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Pakuncen':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(193,159,109,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Patikraja':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(198,165,116,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Purwojati':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(204,171,123,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Purwokerto Barat':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(209,178,131,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Purwokerto Selatan':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(213,184,140,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Purwokerto Timur':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(218,190,148,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Purwokerto Utara':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(222,196,157,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Rawalo':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(227,203,166,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Rowokele':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(231,209,176,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Sampang':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(235,215,186,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Sokaraja':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(239,222,196,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Somagede':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(243,228,206,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Sumbang':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(246,235,217,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Sumpiuh':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(249,241,229,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Tambak':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(252,248,240,1.0)',
+                        interactive: true,
+                    }
+                    break;
+                case 'Wangon':
+                    return {
+                        pane: 'pane_Kecamatan_Banyumas_1',
+                        opacity: 1,
+                        color: 'rgba(128,14,16,0.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(255,254,251,1.0)',
+                        interactive: true,
+                    }
+                    break;
+            }
+        }
+        map.createPane('pane_Kecamatan_Banyumas_1');
+        map.getPane('pane_Kecamatan_Banyumas_1').style.zIndex = 401;
+        map.getPane('pane_Kecamatan_Banyumas_1').style['mix-blend-mode'] = 'normal';
+        var layer_Kecamatan_Banyumas_1 = new L.geoJson(json_Kecamatan_Banyumas_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Kecamatan_Banyumas_1',
+            layerName: 'layer_Kecamatan_Banyumas_1',
+            pane: 'pane_Kecamatan_Banyumas_1',
+            onEachFeature: pop_Kecamatan_Banyumas_1,
+            style: style_Kecamatan_Banyumas_1_0,
+        });
+        bounds_group.addLayer(layer_Kecamatan_Banyumas_1);
+        map.addLayer(layer_Kecamatan_Banyumas_1);
+        function pop_Buffer_UPTDPasar_1km_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama Pasar'] !== null ? autolinker.link(feature.properties['Nama Pasar'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Buffer_UPTDPasar_1km_2_0() {
+            return {
+                pane: 'pane_Buffer_UPTDPasar_1km_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 0.75,
+                fillColor: 'rgba(245,255,211,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Buffer_UPTDPasar_1km_2');
+        map.getPane('pane_Buffer_UPTDPasar_1km_2').style.zIndex = 402;
+        map.getPane('pane_Buffer_UPTDPasar_1km_2').style['mix-blend-mode'] = 'normal';
+        var layer_Buffer_UPTDPasar_1km_2 = new L.geoJson(json_Buffer_UPTDPasar_1km_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Buffer_UPTDPasar_1km_2',
+            layerName: 'layer_Buffer_UPTDPasar_1km_2',
+            pane: 'pane_Buffer_UPTDPasar_1km_2',
+            onEachFeature: pop_Buffer_UPTDPasar_1km_2,
+            style: style_Buffer_UPTDPasar_1km_2_0,
+        });
+        bounds_group.addLayer(layer_Buffer_UPTDPasar_1km_2);
+        map.addLayer(layer_Buffer_UPTDPasar_1km_2);
+        function pop_Buffer_Indomaret_1km_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Buffer_Indomaret_1km_3_0() {
+            return {
+                pane: 'pane_Buffer_Indomaret_1km_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 0.75,
+                fillColor: 'rgba(212,205,255,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Buffer_Indomaret_1km_3');
+        map.getPane('pane_Buffer_Indomaret_1km_3').style.zIndex = 403;
+        map.getPane('pane_Buffer_Indomaret_1km_3').style['mix-blend-mode'] = 'normal';
+        var layer_Buffer_Indomaret_1km_3 = new L.geoJson(json_Buffer_Indomaret_1km_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Buffer_Indomaret_1km_3',
+            layerName: 'layer_Buffer_Indomaret_1km_3',
+            pane: 'pane_Buffer_Indomaret_1km_3',
+            onEachFeature: pop_Buffer_Indomaret_1km_3,
+            style: style_Buffer_Indomaret_1km_3_0,
+        });
+        bounds_group.addLayer(layer_Buffer_Indomaret_1km_3);
+        map.addLayer(layer_Buffer_Indomaret_1km_3);
+        function pop_Buffer_Alfamidi_1km_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Buffer_Alfamidi_1km_4_0() {
+            return {
+                pane: 'pane_Buffer_Alfamidi_1km_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 0.75,
+                fillColor: 'rgba(220,255,205,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Buffer_Alfamidi_1km_4');
+        map.getPane('pane_Buffer_Alfamidi_1km_4').style.zIndex = 404;
+        map.getPane('pane_Buffer_Alfamidi_1km_4').style['mix-blend-mode'] = 'normal';
+        var layer_Buffer_Alfamidi_1km_4 = new L.geoJson(json_Buffer_Alfamidi_1km_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Buffer_Alfamidi_1km_4',
+            layerName: 'layer_Buffer_Alfamidi_1km_4',
+            pane: 'pane_Buffer_Alfamidi_1km_4',
+            onEachFeature: pop_Buffer_Alfamidi_1km_4,
+            style: style_Buffer_Alfamidi_1km_4_0,
+        });
+        bounds_group.addLayer(layer_Buffer_Alfamidi_1km_4);
+        map.addLayer(layer_Buffer_Alfamidi_1km_4);
+        function pop_Buffer_Alfamart_1km_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Buffer_Alfamart_1km_5_0() {
+            return {
+                pane: 'pane_Buffer_Alfamart_1km_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 0.75,
+                fillColor: 'rgba(255,215,218,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Buffer_Alfamart_1km_5');
+        map.getPane('pane_Buffer_Alfamart_1km_5').style.zIndex = 405;
+        map.getPane('pane_Buffer_Alfamart_1km_5').style['mix-blend-mode'] = 'normal';
+        var layer_Buffer_Alfamart_1km_5 = new L.geoJson(json_Buffer_Alfamart_1km_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Buffer_Alfamart_1km_5',
+            layerName: 'layer_Buffer_Alfamart_1km_5',
+            pane: 'pane_Buffer_Alfamart_1km_5',
+            onEachFeature: pop_Buffer_Alfamart_1km_5,
+            style: style_Buffer_Alfamart_1km_5_0,
+        });
+        bounds_group.addLayer(layer_Buffer_Alfamart_1km_5);
+        map.addLayer(layer_Buffer_Alfamart_1km_5);
+        function pop_Buffer_45km_RMUTeachingIndustry_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Buffer_45km_RMUTeachingIndustry_6_0() {
+            return {
+                pane: 'pane_Buffer_45km_RMUTeachingIndustry_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 0.75,
+                fillColor: 'rgba(193,242,255,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Buffer_45km_RMUTeachingIndustry_6');
+        map.getPane('pane_Buffer_45km_RMUTeachingIndustry_6').style.zIndex = 406;
+        map.getPane('pane_Buffer_45km_RMUTeachingIndustry_6').style['mix-blend-mode'] = 'normal';
+        var layer_Buffer_45km_RMUTeachingIndustry_6 = new L.geoJson(json_Buffer_45km_RMUTeachingIndustry_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Buffer_45km_RMUTeachingIndustry_6',
+            layerName: 'layer_Buffer_45km_RMUTeachingIndustry_6',
+            pane: 'pane_Buffer_45km_RMUTeachingIndustry_6',
+            onEachFeature: pop_Buffer_45km_RMUTeachingIndustry_6,
+            style: style_Buffer_45km_RMUTeachingIndustry_6_0,
+        });
+        bounds_group.addLayer(layer_Buffer_45km_RMUTeachingIndustry_6);
+        map.addLayer(layer_Buffer_45km_RMUTeachingIndustry_6);
+        function pop_Buffer_34km_RMUTeachingIndustry_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Buffer_34km_RMUTeachingIndustry_7_0() {
+            return {
+                pane: 'pane_Buffer_34km_RMUTeachingIndustry_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 0.5,
+                fillColor: 'rgba(212,212,212,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Buffer_34km_RMUTeachingIndustry_7');
+        map.getPane('pane_Buffer_34km_RMUTeachingIndustry_7').style.zIndex = 407;
+        map.getPane('pane_Buffer_34km_RMUTeachingIndustry_7').style['mix-blend-mode'] = 'normal';
+        var layer_Buffer_34km_RMUTeachingIndustry_7 = new L.geoJson(json_Buffer_34km_RMUTeachingIndustry_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Buffer_34km_RMUTeachingIndustry_7',
+            layerName: 'layer_Buffer_34km_RMUTeachingIndustry_7',
+            pane: 'pane_Buffer_34km_RMUTeachingIndustry_7',
+            onEachFeature: pop_Buffer_34km_RMUTeachingIndustry_7,
+            style: style_Buffer_34km_RMUTeachingIndustry_7_0,
+        });
+        bounds_group.addLayer(layer_Buffer_34km_RMUTeachingIndustry_7);
+        map.addLayer(layer_Buffer_34km_RMUTeachingIndustry_7);
+        function pop_JarakPasarBanyumasTI_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama Pasar</th>\
+                        <td>' + (feature.properties['Nama Pasar'] !== null ? autolinker.link(feature.properties['Nama Pasar'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">start</th>\
+                        <td>' + (feature.properties['start'] !== null ? autolinker.link(feature.properties['start'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">end</th>\
+                        <td>' + (feature.properties['end'] !== null ? autolinker.link(feature.properties['end'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">cost</th>\
+                        <td>' + (feature.properties['cost'] !== null ? autolinker.link(feature.properties['cost'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jarak (km)</th>\
+                        <td>' + (feature.properties['Jarak (km)'] !== null ? autolinker.link(feature.properties['Jarak (km)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_JarakPasarBanyumasTI_8_0(feature) {
+            switch (String(feature.properties['Jarak (km)'])) {
+                case '2.3':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(123,50,148,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.95':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(133,66,156,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '3.75':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(143,82,164,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.16':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(152,98,172,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.5':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(162,113,181,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.51':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(172,129,189,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.31':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(182,145,197,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.56':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(192,161,205,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '6.66':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(199,173,211,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '7.24':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(207,185,217,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '8.2':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(214,196,222,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '8.5':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(221,207,228,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '11.77':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(229,219,233,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '14.48':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(236,230,239,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '16.09':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(243,241,244,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '19.92':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(241,245,241,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '20.52':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(230,241,229,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '20.69':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(219,237,217,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '22.57':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(208,233,205,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '24.4':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(197,230,193,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '25.17':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(186,226,181,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '25.19':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(174,222,169,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '25.31':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(160,216,156,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '27.25':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(137,205,142,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '27.39':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(114,193,127,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '31.01':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(92,182,113,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '33.95':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(69,170,98,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '36.6':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(46,159,84,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '38.49':
+                    return {
+                        pane: 'pane_JarakPasarBanyumasTI_8',
+                        opacity: 1,
+                        color: 'rgba(23,147,69,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+            }
+        }
+        map.createPane('pane_JarakPasarBanyumasTI_8');
+        map.getPane('pane_JarakPasarBanyumasTI_8').style.zIndex = 408;
+        map.getPane('pane_JarakPasarBanyumasTI_8').style['mix-blend-mode'] = 'normal';
+        var layer_JarakPasarBanyumasTI_8 = new L.geoJson(json_JarakPasarBanyumasTI_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_JarakPasarBanyumasTI_8',
+            layerName: 'layer_JarakPasarBanyumasTI_8',
+            pane: 'pane_JarakPasarBanyumasTI_8',
+            onEachFeature: pop_JarakPasarBanyumasTI_8,
+            style: style_JarakPasarBanyumasTI_8_0,
+        });
+        bounds_group.addLayer(layer_JarakPasarBanyumasTI_8);
+        map.addLayer(layer_JarakPasarBanyumasTI_8);
+        function pop_JarakKonsumenTI_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">J Konsumen</th>\
+                        <td>' + (feature.properties['J Konsumen'] !== null ? autolinker.link(feature.properties['J Konsumen'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NamaTempat</th>\
+                        <td>' + (feature.properties['NamaTempat'] !== null ? autolinker.link(feature.properties['NamaTempat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">start</th>\
+                        <td>' + (feature.properties['start'] !== null ? autolinker.link(feature.properties['start'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">end</th>\
+                        <td>' + (feature.properties['end'] !== null ? autolinker.link(feature.properties['end'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">cost</th>\
+                        <td>' + (feature.properties['cost'] !== null ? autolinker.link(feature.properties['cost'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jarak (km)</th>\
+                        <td>' + (feature.properties['Jarak (km)'] !== null ? autolinker.link(feature.properties['Jarak (km)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_JarakKonsumenTI_9_0(feature) {
+            switch (String(feature.properties['Jarak (km)'])) {
+                case '0.78':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(48,18,59,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '0.79':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(65,67,167,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '0.85':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(71,113,233,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '0.94':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(62,156,254,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '1.49':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(33,198,225,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.53':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(27,229,181,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.76':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(72,248,130,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.91':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(137,255,77,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '3.17':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(187,245,52,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.31':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(226,220,56,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.61':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(251,185,56,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.78':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(253,139,38,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.89':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(239,89,17,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.96':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(212,51,5,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.22':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(172,23,1,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.5':
+                    return {
+                        pane: 'pane_JarakKonsumenTI_9',
+                        opacity: 1,
+                        color: 'rgba(122,4,3,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+            }
+        }
+        map.createPane('pane_JarakKonsumenTI_9');
+        map.getPane('pane_JarakKonsumenTI_9').style.zIndex = 409;
+        map.getPane('pane_JarakKonsumenTI_9').style['mix-blend-mode'] = 'normal';
+        var layer_JarakKonsumenTI_9 = new L.geoJson(json_JarakKonsumenTI_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_JarakKonsumenTI_9',
+            layerName: 'layer_JarakKonsumenTI_9',
+            pane: 'pane_JarakKonsumenTI_9',
+            onEachFeature: pop_JarakKonsumenTI_9,
+            style: style_JarakKonsumenTI_9_0,
+        });
+        bounds_group.addLayer(layer_JarakKonsumenTI_9);
+        map.addLayer(layer_JarakKonsumenTI_9);
+        function pop_JarakIndomaretTI_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama</th>\
+                        <td>' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">start</th>\
+                        <td>' + (feature.properties['start'] !== null ? autolinker.link(feature.properties['start'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">end</th>\
+                        <td>' + (feature.properties['end'] !== null ? autolinker.link(feature.properties['end'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">cost</th>\
+                        <td>' + (feature.properties['cost'] !== null ? autolinker.link(feature.properties['cost'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jarak (km)</th>\
+                        <td>' + (feature.properties['Jarak (km)'] !== null ? autolinker.link(feature.properties['Jarak (km)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_JarakIndomaretTI_10_0(feature) {
+            switch (String(feature.properties['Jarak (km)'])) {
+                case '2.15':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(0,0,4,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.3':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(8,7,30,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.44':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(24,15,62,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '3.85':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(45,17,95,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.3':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(69,15,118,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.36':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(91,22,126,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.53':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(114,31,129,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.8':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(136,39,129,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.98':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(158,47,127,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.05':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(182,55,122,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.62':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(205,63,113,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.67':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(225,77,102,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '6.2':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(241,96,93,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '6.9':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(249,122,93,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '7.77':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(253,149,103,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '12.64':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(254,175,120,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '15.03':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(254,201,141,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '21.85':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(253,228,165,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '27.15':
+                    return {
+                        pane: 'pane_JarakIndomaretTI_10',
+                        opacity: 1,
+                        color: 'rgba(252,253,191,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+            }
+        }
+        map.createPane('pane_JarakIndomaretTI_10');
+        map.getPane('pane_JarakIndomaretTI_10').style.zIndex = 410;
+        map.getPane('pane_JarakIndomaretTI_10').style['mix-blend-mode'] = 'normal';
+        var layer_JarakIndomaretTI_10 = new L.geoJson(json_JarakIndomaretTI_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_JarakIndomaretTI_10',
+            layerName: 'layer_JarakIndomaretTI_10',
+            pane: 'pane_JarakIndomaretTI_10',
+            onEachFeature: pop_JarakIndomaretTI_10,
+            style: style_JarakIndomaretTI_10_0,
+        });
+        bounds_group.addLayer(layer_JarakIndomaretTI_10);
+        map.addLayer(layer_JarakIndomaretTI_10);
+        function pop_JarakAlfamidiTI_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama</th>\
+                        <td>' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">start</th>\
+                        <td>' + (feature.properties['start'] !== null ? autolinker.link(feature.properties['start'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">end</th>\
+                        <td>' + (feature.properties['end'] !== null ? autolinker.link(feature.properties['end'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">cost</th>\
+                        <td>' + (feature.properties['cost'] !== null ? autolinker.link(feature.properties['cost'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jarak (km)</th>\
+                        <td>' + (feature.properties['Jarak (km)'] !== null ? autolinker.link(feature.properties['Jarak (km)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_JarakAlfamidiTI_11_0(feature) {
+            switch (String(feature.properties['Jarak (km)'])) {
+                case '2.01':
+                    return {
+                        pane: 'pane_JarakAlfamidiTI_11',
+                        opacity: 1,
+                        color: 'rgba(0,32,77,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '3.03':
+                    return {
+                        pane: 'pane_JarakAlfamidiTI_11',
+                        opacity: 1,
+                        color: 'rgba(49,68,107,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.35':
+                    return {
+                        pane: 'pane_JarakAlfamidiTI_11',
+                        opacity: 1,
+                        color: 'rgba(102,105,112,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '6.6':
+                    return {
+                        pane: 'pane_JarakAlfamidiTI_11',
+                        opacity: 1,
+                        color: 'rgba(150,144,120,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '14.64':
+                    return {
+                        pane: 'pane_JarakAlfamidiTI_11',
+                        opacity: 1,
+                        color: 'rgba(204,187,105,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+            }
+        }
+        map.createPane('pane_JarakAlfamidiTI_11');
+        map.getPane('pane_JarakAlfamidiTI_11').style.zIndex = 411;
+        map.getPane('pane_JarakAlfamidiTI_11').style['mix-blend-mode'] = 'normal';
+        var layer_JarakAlfamidiTI_11 = new L.geoJson(json_JarakAlfamidiTI_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_JarakAlfamidiTI_11',
+            layerName: 'layer_JarakAlfamidiTI_11',
+            pane: 'pane_JarakAlfamidiTI_11',
+            onEachFeature: pop_JarakAlfamidiTI_11,
+            style: style_JarakAlfamidiTI_11_0,
+        });
+        bounds_group.addLayer(layer_JarakAlfamidiTI_11);
+        map.addLayer(layer_JarakAlfamidiTI_11);
+        function pop_JarakAlfamartTI_12(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama _</th>\
+                        <td>' + (feature.properties['Nama _'] !== null ? autolinker.link(feature.properties['Nama _'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">start</th>\
+                        <td>' + (feature.properties['start'] !== null ? autolinker.link(feature.properties['start'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">end</th>\
+                        <td>' + (feature.properties['end'] !== null ? autolinker.link(feature.properties['end'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">cost</th>\
+                        <td>' + (feature.properties['cost'] !== null ? autolinker.link(feature.properties['cost'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jarak (km)</th>\
+                        <td>' + (feature.properties['Jarak (km)'] !== null ? autolinker.link(feature.properties['Jarak (km)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_JarakAlfamartTI_12_0(feature) {
+            switch (String(feature.properties['Jarak (km)'])) {
+                case '0.72':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(11,4,5,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '1.04':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(20,9,16,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.1':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(27,15,26,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.19':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(35,21,38,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.22':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(41,26,49,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.24':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(48,32,62,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.29':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(53,37,74,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.76':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(58,44,87,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '2.86':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(61,49,100,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '3.35':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(64,56,114,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '3.52':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(65,62,127,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.35':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(64,71,139,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '4.96':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(62,79,148,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '5.65':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(59,88,154,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '6.28':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(56,97,157,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '7.43':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(54,106,159,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '7.85':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(53,114,161,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '8.29':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(53,123,163,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '8.82':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(52,132,165,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '11.06':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(52,140,167,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '15.02':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(52,148,169,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '15.13':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(53,156,170,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '18.18':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(55,165,172,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '20.72':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(58,173,172,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '20.88':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(63,182,173,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '22.93':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(70,190,173,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '23.1':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(80,198,173,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '25.55':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(95,205,173,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '27.22':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(114,212,173,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '28.05':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(137,217,177,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '31.05':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(158,223,184,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '34.23':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(177,228,193,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '36.98':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(194,233,205,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '42.39':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(209,239,218,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+                case '44.01':
+                    return {
+                        pane: 'pane_JarakAlfamartTI_12',
+                        opacity: 1,
+                        color: 'rgba(222,245,229,1.0)',
+                        dashArray: '',
+                        lineCap: 'square',
+                        lineJoin: 'bevel',
+                        weight: 3.0,
+                        fillOpacity: 0,
+                        interactive: true,
+                    }
+                    break;
+            }
+        }
+        map.createPane('pane_JarakAlfamartTI_12');
+        map.getPane('pane_JarakAlfamartTI_12').style.zIndex = 412;
+        map.getPane('pane_JarakAlfamartTI_12').style['mix-blend-mode'] = 'normal';
+        var layer_JarakAlfamartTI_12 = new L.geoJson(json_JarakAlfamartTI_12, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_JarakAlfamartTI_12',
+            layerName: 'layer_JarakAlfamartTI_12',
+            pane: 'pane_JarakAlfamartTI_12',
+            onEachFeature: pop_JarakAlfamartTI_12,
+            style: style_JarakAlfamartTI_12_0,
+        });
+        bounds_group.addLayer(layer_JarakAlfamartTI_12);
+        map.addLayer(layer_JarakAlfamartTI_12);
+        function pop_Alfamart_13(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama</th>\
+                        <td>' + (feature.properties['Nama _'] !== null ? autolinker.link(feature.properties['Nama _'].toLocaleString()) : '') + '</td>\
+                    </tr>\<tr>\
+                        <th scope="row">Alamat</th>\
+                        <td>' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kelurahan</th>\
+                        <td>' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Koordinat</th>\
+                        <td>' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Link GMaps</th>\
+                        <td>' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Alfamart_13_0() {
+            return {
+                pane: 'pane_Alfamart_13',
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/alfamart.png',
+                    iconSize: [45.0, 15.0]
+                }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Alfamart_13');
+        map.getPane('pane_Alfamart_13').style.zIndex = 413;
+        map.getPane('pane_Alfamart_13').style['mix-blend-mode'] = 'normal';
+        var layer_Alfamart_13 = new L.geoJson(json_Alfamart_13, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Alfamart_13',
+            layerName: 'layer_Alfamart_13',
+            pane: 'pane_Alfamart_13',
+            onEachFeature: pop_Alfamart_13,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Alfamart_13_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Alfamart_13);
+        map.addLayer(layer_Alfamart_13);
+        function pop_Alfamidi_14(feature, layer) {
+            var popupContent = '<table>\
+                      <tr>\
+                        <th scope="row">Nama</th>\
+                        <td>' + (feature.properties['NAMA'] !== null ? autolinker.link(feature.properties['NAMA'].toLocaleString()) : '') + '</td>\
+                    </tr>\<tr>\
+                        <th scope="row">Alamat</th>\
+                        <td>' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kelurahan</th>\
+                        <td>' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Koordinat</th>\
+                        <td>' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Link GMaps</th>\
+                        <td>' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Alfamidi_14_0() {
+            return {
+                pane: 'pane_Alfamidi_14',
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/alfamidi.png',
+                    iconSize: [35.0, 35.0]
+                }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Alfamidi_14');
+        map.getPane('pane_Alfamidi_14').style.zIndex = 414;
+        map.getPane('pane_Alfamidi_14').style['mix-blend-mode'] = 'normal';
+        var layer_Alfamidi_14 = new L.geoJson(json_Alfamidi_14, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Alfamidi_14',
+            layerName: 'layer_Alfamidi_14',
+            pane: 'pane_Alfamidi_14',
+            onEachFeature: pop_Alfamidi_14,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Alfamidi_14_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Alfamidi_14);
+        map.addLayer(layer_Alfamidi_14);
+        function pop_Indomaret_15(feature, layer) {
+            var popupContent = '<table>\
+                <tr>\
+                        <th scope="row">Nama</th>\
+                        <td>' + (feature.properties['Nama _'] !== null ? autolinker.link(feature.properties['Nama _'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td>' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kelurahan</th>\
+                        <td>' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Koordinat</th>\
+                        <td>' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Link GMaps</th>\
+                        <td>' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Indomaret_15_0() {
+            return {
+                pane: 'pane_Indomaret_15',
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/indomaret.png',
+                    iconSize: [45.0, 15.0]
+                }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Indomaret_15');
+        map.getPane('pane_Indomaret_15').style.zIndex = 415;
+        map.getPane('pane_Indomaret_15').style['mix-blend-mode'] = 'normal';
+        var layer_Indomaret_15 = new L.geoJson(json_Indomaret_15, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Indomaret_15',
+            layerName: 'layer_Indomaret_15',
+            pane: 'pane_Indomaret_15',
+            onEachFeature: pop_Indomaret_15,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Indomaret_15_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Indomaret_15);
+        map.addLayer(layer_Indomaret_15);
+        function pop_PasarTradisional_16(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama Pasar</th>\
+                        <td>' + (feature.properties['Nama Pasar'] !== null ? autolinker.link(feature.properties['Nama Pasar'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td>' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kelurahan</th>\
+                        <td>' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Koordinat</th>\
+                        <td>' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Link GMaps</th>\
+                        <td>' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_PasarTradisional_16_0() {
+            return {
+                pane: 'pane_PasarTradisional_16',
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/store.png',
+                    iconSize: [30.0, 30.0]
+                }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PasarTradisional_16');
+        map.getPane('pane_PasarTradisional_16').style.zIndex = 416;
+        map.getPane('pane_PasarTradisional_16').style['mix-blend-mode'] = 'normal';
+        var layer_PasarTradisional_16 = new L.geoJson(json_PasarTradisional_16, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PasarTradisional_16',
+            layerName: 'layer_PasarTradisional_16',
+            pane: 'pane_PasarTradisional_16',
+            onEachFeature: pop_PasarTradisional_16,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_PasarTradisional_16_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PasarTradisional_16);
+        map.addLayer(layer_PasarTradisional_16);
+        function pop_Konsumen_17(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Jenis Konsumen</th>\
+                        <td>' + (feature.properties['J Konsumen'] !== null ? autolinker.link(feature.properties['J Konsumen'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nama Tempat</th>\
+                        <td>' + (feature.properties['NamaTempat'] !== null ? autolinker.link(feature.properties['NamaTempat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td>' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kelurahan</th>\
+                        <td>' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Koordinat</th>\
+                        <td>' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Link GMaps</th>\
+                        <td>' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Total Beras</th>\
+                        <td>' + (feature.properties['TotalBeras'] !== null ? autolinker.link(feature.properties['TotalBeras'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_Konsumen_17_0() {
+            return {
+                pane: 'pane_Konsumen_17',
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/consumer.png',
+                    iconSize: [30.0, 30.0]
+                }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Konsumen_17');
+        map.getPane('pane_Konsumen_17').style.zIndex = 417;
+        map.getPane('pane_Konsumen_17').style['mix-blend-mode'] = 'normal';
+        var layer_Konsumen_17 = new L.geoJson(json_Konsumen_17, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Konsumen_17',
+            layerName: 'layer_Konsumen_17',
+            pane: 'pane_Konsumen_17',
+            onEachFeature: pop_Konsumen_17,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Konsumen_17_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Konsumen_17);
+        map.addLayer(layer_Konsumen_17);
+        function pop_RMUTeachingIndustryUNSOED1_18(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama</th>\
+                        <td>' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td>' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Koordinat</th>\
+                        <td>' + (feature.properties['Koordinat'] !== null ? autolinker.link(feature.properties['Koordinat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kelurahan</th>\
+                        <td>' + (feature.properties['Kelurahan'] !== null ? autolinker.link(feature.properties['Kelurahan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Link GMaps</th>\
+                        <td>' + (feature.properties['Link GMaps'] !== null ? autolinker.link(feature.properties['Link GMaps'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+
+        function style_RMUTeachingIndustryUNSOED1_18_0() {
+            return {
+                pane: 'pane_RMUTeachingIndustryUNSOED1_18',
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/pabrik.png',
+                    iconSize: [30, 30]
+                }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_RMUTeachingIndustryUNSOED1_18');
+        map.getPane('pane_RMUTeachingIndustryUNSOED1_18').style.zIndex = 418;
+        map.getPane('pane_RMUTeachingIndustryUNSOED1_18').style['mix-blend-mode'] = 'normal';
+        var layer_RMUTeachingIndustryUNSOED1_18 = new L.geoJson(json_RMUTeachingIndustryUNSOED1_18, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_RMUTeachingIndustryUNSOED1_18',
+            layerName: 'layer_RMUTeachingIndustryUNSOED1_18',
+            pane: 'pane_RMUTeachingIndustryUNSOED1_18',
+            onEachFeature: pop_RMUTeachingIndustryUNSOED1_18,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_RMUTeachingIndustryUNSOED1_18_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_RMUTeachingIndustryUNSOED1_18);
+        map.addLayer(layer_RMUTeachingIndustryUNSOED1_18);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+            .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+            .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps, { '<img src="legend/RMUTeachingIndustryUNSOED1_18.png" /> RMU Teaching Industry UNSOED 1': layer_RMUTeachingIndustryUNSOED1_18, '<img src="legend/Konsumen_17.png" /> Konsumen': layer_Konsumen_17, '<img src="legend/PasarTradisional_16.png" /> Pasar Tradisional': layer_PasarTradisional_16, '<img src="legend/Indomaret_15.png" /> Indomaret': layer_Indomaret_15, '<img src="legend/Alfamidi_14.png" /> Alfamidi': layer_Alfamidi_14, '<img src="legend/Alfamart_13.png" /> Alfamart': layer_Alfamart_13, 'Jarak Alfamart-TI<br /><table><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_0720.png" /></td><td>0,72</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_1041.png" /></td><td>1,04</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_2102.png" /></td><td>2,10</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_2193.png" /></td><td>2,19</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_2224.png" /></td><td>2,22</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_2245.png" /></td><td>2,24</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_2296.png" /></td><td>2,29</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_2767.png" /></td><td>2,76</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_2868.png" /></td><td>2,86</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_3359.png" /></td><td>3,35</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_35210.png" /></td><td>3,52</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_43511.png" /></td><td>4,35</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_49612.png" /></td><td>4,96</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_56513.png" /></td><td>5,65</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_62814.png" /></td><td>6,28</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_74315.png" /></td><td>7,43</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_78516.png" /></td><td>7,85</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_82917.png" /></td><td>8,29</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_88218.png" /></td><td>8,82</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_110619.png" /></td><td>11,06</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_150220.png" /></td><td>15,02</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_151321.png" /></td><td>15,13</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_181822.png" /></td><td>18,18</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_207223.png" /></td><td>20,72</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_208824.png" /></td><td>20,88</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_229325.png" /></td><td>22,93</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_231026.png" /></td><td>23,10</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_255527.png" /></td><td>25,55</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_272228.png" /></td><td>27,22</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_280529.png" /></td><td>28,05</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_310530.png" /></td><td>31,05</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_342331.png" /></td><td>34,23</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_369832.png" /></td><td>36,98</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_423933.png" /></td><td>42,39</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamartTI_12_440134.png" /></td><td>44,01</td></tr></table>': layer_JarakAlfamartTI_12, 'Jarak Alfamidi-TI<br /><table><tr><td style="text-align: center;"><img src="legend/JarakAlfamidiTI_11_2010.png" /></td><td>2,01</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamidiTI_11_3031.png" /></td><td>3,03</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamidiTI_11_5352.png" /></td><td>5,35</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamidiTI_11_6603.png" /></td><td>6,60</td></tr><tr><td style="text-align: center;"><img src="legend/JarakAlfamidiTI_11_14644.png" /></td><td>14,64</td></tr></table>': layer_JarakAlfamidiTI_11, 'Jarak Indomaret-TI<br /><table><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_2150.png" /></td><td>2,15</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_2301.png" /></td><td>2,30</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_2442.png" /></td><td>2,44</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_3853.png" /></td><td>3,85</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_4304.png" /></td><td>4,30</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_4365.png" /></td><td>4,36</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_4536.png" /></td><td>4,53</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_4807.png" /></td><td>4,80</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_4988.png" /></td><td>4,98</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_5059.png" /></td><td>5,05</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_56210.png" /></td><td>5,62</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_56711.png" /></td><td>5,67</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_62012.png" /></td><td>6,20</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_69013.png" /></td><td>6,90</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_77714.png" /></td><td>7,77</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_126415.png" /></td><td>12,64</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_150316.png" /></td><td>15,03</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_218517.png" /></td><td>21,85</td></tr><tr><td style="text-align: center;"><img src="legend/JarakIndomaretTI_10_271518.png" /></td><td>27,15</td></tr></table>': layer_JarakIndomaretTI_10, 'Jarak Konsumen-TI<br /><table><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_0780.png" /></td><td>0,78</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_0791.png" /></td><td>0,79</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_0852.png" /></td><td>0,85</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_0943.png" /></td><td>0,94</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_1494.png" /></td><td>1,49</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_2535.png" /></td><td>2,53</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_2766.png" /></td><td>2,76</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_2917.png" /></td><td>2,91</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_3178.png" /></td><td>3,17</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_4319.png" /></td><td>4,31</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_46110.png" /></td><td>4,61</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_47811.png" /></td><td>4,78</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_48912.png" /></td><td>4,89</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_49613.png" /></td><td>4,96</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_52214.png" /></td><td>5,22</td></tr><tr><td style="text-align: center;"><img src="legend/JarakKonsumenTI_9_55015.png" /></td><td>5,50</td></tr></table>': layer_JarakKonsumenTI_9, 'Jarak Pasar Banyumas-TI<br /><table><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_2300.png" /></td><td>2,30</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_2951.png" /></td><td>2,95</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_3752.png" /></td><td>3,75</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_4163.png" /></td><td>4,16</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_4504.png" /></td><td>4,50</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_4515.png" /></td><td>4,51</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_5316.png" /></td><td>5,31</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_5567.png" /></td><td>5,56</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_6668.png" /></td><td>6,66</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_7249.png" /></td><td>7,24</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_82010.png" /></td><td>8,20</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_85011.png" /></td><td>8,50</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_117712.png" /></td><td>11,77</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_144813.png" /></td><td>14,48</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_160914.png" /></td><td>16,09</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_199215.png" /></td><td>19,92</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_205216.png" /></td><td>20,52</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_206917.png" /></td><td>20,69</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_225718.png" /></td><td>22,57</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_244019.png" /></td><td>24,40</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_251720.png" /></td><td>25,17</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_251921.png" /></td><td>25,19</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_253122.png" /></td><td>25,31</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_272523.png" /></td><td>27,25</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_273924.png" /></td><td>27,39</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_310125.png" /></td><td>31,01</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_339526.png" /></td><td>33,95</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_366027.png" /></td><td>36,60</td></tr><tr><td style="text-align: center;"><img src="legend/JarakPasarBanyumasTI_8_384928.png" /></td><td>38,49</td></tr></table>': layer_JarakPasarBanyumasTI_8, '<img src="legend/Buffer_34km_RMUTeachingIndustry_7.png" /> Buffer_34km_RMU Teaching Industry': layer_Buffer_34km_RMUTeachingIndustry_7, '<img src="legend/Buffer_45km_RMUTeachingIndustry_6.png" /> Buffer_4,5km_RMU Teaching Industry': layer_Buffer_45km_RMUTeachingIndustry_6, '<img src="legend/Buffer_Alfamart_1km_5.png" /> Buffer_Alfamart_1km': layer_Buffer_Alfamart_1km_5, '<img src="legend/Buffer_Alfamidi_1km_4.png" /> Buffer_Alfamidi_1km': layer_Buffer_Alfamidi_1km_4, '<img src="legend/Buffer_Indomaret_1km_3.png" /> Buffer_Indomaret_1km': layer_Buffer_Indomaret_1km_3, '<img src="legend/Buffer_UPTDPasar_1km_2.png" /> Buffer_UPTD Pasar_1km': layer_Buffer_UPTDPasar_1km_2, 'Kecamatan_Banyumas<br /><table><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Ajibarang0.png" /></td><td>Ajibarang</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Ayah1.png" /></td><td>Ayah</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Banyumas2.png" /></td><td>Banyumas</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Baturaden3.png" /></td><td>Baturaden</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_BumiJawa4.png" /></td><td>Bumi Jawa</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Cilongok5.png" /></td><td>Cilongok</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_GandrungMangu6.png" /></td><td>Gandrung Mangu</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Gumelar7.png" /></td><td>Gumelar</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Jatilawang8.png" /></td><td>Jatilawang</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Jeruklegi9.png" /></td><td>Jeruklegi</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kalibagor10.png" /></td><td>Kalibagor</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kalimanah11.png" /></td><td>Kalimanah</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_KarangPucung12.png" /></td><td>Karang Pucung</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Karanglewas13.png" /></td><td>Karanglewas</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kasugihan14.png" /></td><td>Kasugihan</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kawunganten15.png" /></td><td>Kawunganten</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kebasen16.png" /></td><td>Kebasen</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kedungbanteng17.png" /></td><td>Kedungbanteng</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kemangkon18.png" /></td><td>Kemangkon</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kembaran19.png" /></td><td>Kembaran</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kemranjen20.png" /></td><td>Kemranjen</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Kroya21.png" /></td><td>Kroya</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Lumbir22.png" /></td><td>Lumbir</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Maos23.png" /></td><td>Maos</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Nusawungu24.png" /></td><td>Nusawungu</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Padamara25.png" /></td><td>Padamara</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Paguyangan26.png" /></td><td>Paguyangan</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Pakuncen27.png" /></td><td>Pakuncen</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Patikraja28.png" /></td><td>Patikraja</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Purwojati29.png" /></td><td>Purwojati</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_PurwokertoBarat30.png" /></td><td>Purwokerto Barat</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_PurwokertoSelatan31.png" /></td><td>Purwokerto Selatan</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_PurwokertoTimur32.png" /></td><td>Purwokerto Timur</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_PurwokertoUtara33.png" /></td><td>Purwokerto Utara</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Rawalo34.png" /></td><td>Rawalo</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Rowokele35.png" /></td><td>Rowokele</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Sampang36.png" /></td><td>Sampang</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Sokaraja37.png" /></td><td>Sokaraja</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Somagede38.png" /></td><td>Somagede</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Sumbang39.png" /></td><td>Sumbang</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Sumpiuh40.png" /></td><td>Sumpiuh</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Tambak41.png" /></td><td>Tambak</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_Banyumas_1_Wangon42.png" /></td><td>Wangon</td></tr></table>': layer_Kecamatan_Banyumas_1, "Google Satellite": layer_GoogleSatellite_0, }).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_Kecamatan_Banyumas_1.eachLayer(function (layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Kecamatan'] !== null ? String('<div style="color: #323232; font-size: 6pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['Kecamatan']) + '</div>' : ''), { permanent: true, offset: [-0, -16], className: 'css_Kecamatan_Banyumas_1' });
+            labels.push(layer);
+            totalMarkers += 1;
+            layer.added = true;
+            addLabel(layer, i);
+            i++;
+        });
+        resetLabels([layer_Kecamatan_Banyumas_1]);
+        map.on("zoomend", function () {
+            resetLabels([layer_Kecamatan_Banyumas_1]);
+        });
+        map.on("layeradd", function () {
+            resetLabels([layer_Kecamatan_Banyumas_1]);
+        });
+        map.on("layerremove", function () {
+            resetLabels([layer_Kecamatan_Banyumas_1]);
+        });
+    </script>
+</body>
+
+</html>
